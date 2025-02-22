@@ -1,3 +1,8 @@
+import { screenMode, darkLightBtn } from "./helpers.js";
+
+// const darkLightBtn = document.createElement("button");
+
+
 // the search bar input element
 const searchBarInput = document.getElementById("cityInput");
 // The search button
@@ -26,7 +31,7 @@ async function fetchWeatherData() {
         console.log(response);
         
         if (!response.ok) {
-            throw new Error("HTTP error! Status: ", response.status);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const responseData = await response.json();
@@ -37,23 +42,22 @@ async function fetchWeatherData() {
             return;
         }
 
-        document.body.style.backgroundImage = "url('sunny.jpg')"
+        // document.body.style.backgroundImage = "url('sunny.jpg')"
 
         const { temperature, weather_descriptions, humidity, wind_speed, weather_icons, feelslike } = responseData.current;
 
-        let WeatherInfo = document.getElementById("WeatherInfo");
-        WeatherInfo.innerHTML = "";
-        WeatherInfo.innerHTML += `<h2>${responseData.location.name}, ${responseData.location.country}</h2>`;
-        WeatherInfo.innerHTML += `<table>`;
+        let weatherInfo = document.getElementById("weatherInfo");
+        weatherInfo.innerHTML = `
+        <h2>${responseData.location.name}, ${responseData.location.country}</h2>
+        <img src="${weather_icons[0]}" alt="Weather Icon">
 
-        WeatherInfo.innerHTML += `<img src="${weather_icons[0]}" alt="Weather Icon"><br>`;
-        WeatherInfo.innerHTML += `<tr><td><b>Temperature: </b></td><td>${temperature}°C</td></tr><br>`;
-        WeatherInfo.innerHTML += `<tr><td><b>Feels Like: </b></td><td>${feelslike}°C</td></tr><br>`;
-        WeatherInfo.innerHTML += `<tr><td><b>Weather_Description: </b></td><td>${weather_descriptions[0]}</td></tr><br>`;
-        WeatherInfo.innerHTML += `<tr><td><b>Humidity: </b></td><td>${humidity}%</td></tr><br>`;
-        WeatherInfo.innerHTML += `<tr><td><b>Wind_Speed: </b></td><td>${wind_speed} km/h</td></tr><br>`;
-        
-        WeatherInfo.innerHTML += `</table>`;
+        <table>
+            <tr><td><b>Temperature: </b></td><td>${temperature}°C</td></tr>
+            <tr><td><b>Feels Like: </b></td><td>${feelslike}°C</td></tr>
+            <tr><td><b>Weather_Description: </b></td><td>${weather_descriptions[0]}</td></tr>
+            <tr><td><b>Humidity: </b></td><td>${humidity}%</td></tr>
+            <tr><td><b>Wind_Speed: </b></td><td>${wind_speed} km/h</td></tr>
+        </table>`
 
 
         // document.getElementById("WeatherInfo").innerHTML = `
@@ -74,5 +78,8 @@ async function fetchWeatherData() {
 // fetchWeatherData()
 
 searchBtn.addEventListener("click", fetchWeatherData);
+
+darkLightBtn.addEventListener("click", screenMode);
+
 
 

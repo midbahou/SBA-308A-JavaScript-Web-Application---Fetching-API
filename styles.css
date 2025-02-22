@@ -33,3 +33,15 @@ button{
 #WeatherInfo {
     margin-top: 20px;    
 }
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+.darkLight-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
