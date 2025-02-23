@@ -1,9 +1,8 @@
 export const darkLightBtn = document.createElement("button");
+
 darkLightBtn.textContent = "Toggle Mode";
 darkLightBtn.classList.add("darkLight-btn");
-
 document.body.appendChild(darkLightBtn);
-
 
 export function screenMode(e) {
     e.preventDefault();
@@ -19,4 +18,15 @@ export function screenMode(e) {
     }
     
 }
-darkLightBtn.addEventListener("click", screenMode)
+
+darkLightBtn.addEventListener("click", screenMode);
+
+
+
+
+
+// export const unitBtn = document.createElement("button");
+
+// unitBtn.textContent = "Unit";
+// unitBtn.classList.add("unit-btn");
+// document.body.appendChild(unitBtn);

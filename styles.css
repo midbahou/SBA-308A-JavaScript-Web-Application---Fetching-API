@@ -30,7 +30,7 @@ button{
     /* color: white; */
 }
 
-#WeatherInfo {
+#weatherInfo {
     margin-top: 20px;    
 }
 
@@ -41,7 +41,33 @@ button{
 .darkLight-btn {
     position: fixed;
     top: 10px;
-    right: 10px;
+    right: 20px;
     padding: 10px 20px;
     cursor: pointer;
+    z-index: 1000;
+}
+
+#unitBtn{
+    position: fixed;
+    top: 10px;
+    left: 25px;
+    padding: 10px 10px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#unitSelect{
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+#unitSelect option {
+    padding: 5px;
 }
