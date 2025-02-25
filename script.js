@@ -11,7 +11,7 @@ const unitSelect = document.getElementById("unitSelect");
 
 
 // store the API_KEY and the url in a variable
-const API_KEY = "11d8406ae7ff6bace178c0f49e2310c2"
+const API_KEY = "0de02c77cc88db2abc82790f1a813b15"
 const options = {
     method: 'GET'
 }
@@ -44,6 +44,30 @@ async function fetchWeatherData() {
         }
 
         // document.body.style.backgroundImage = "url('sunny.jpg')"
+        // let unitValue = "°C";
+        // if (responseData.request.unit === "m") {
+        //     unitValue = "°C";
+        // } else if (responseData.request.unit  === "f") {
+        //     unitValue = "°F"
+        // } else {
+        //     unitValue = "°K"
+        // }
+
+        // let unitValue = "°C";
+        // switch (unit) {
+        //     case "f":
+        //         unitValue = "°F";
+        //         break;
+
+        //     case "s":
+        //         unitValue = "°K"
+        //         break;
+
+        //     case "m": 
+        //     default:
+        //         unitValue = "°C";
+        //         break;
+        // }
 
         // extract data
         const { temperature, weather_descriptions, humidity, wind_speed, weather_icons, feelslike, precip } = responseData.current;
@@ -64,6 +88,7 @@ async function fetchWeatherData() {
             <tr><td><b>Wind_Speed: </b></td><td>${wind_speed} km/h</td></tr>
         </table>`
         
+    
     } catch (error) {
         console.error("Error fetching data: ", error);
     }
@@ -75,25 +100,30 @@ async function fetchWeatherData() {
 // Handle Unit Selection
 async function unitMode() {
     const city = searchBarInput.value.trim();
+    console.log(unitSelect.value)
     let unit = "m"; // Default to Metric
+    // let unitSymbol = "°C"; // Default to Celsius
+
     switch(unitSelect.value){
         case "Fahrenheit":
             unit = "f";
+            // unitSymbol = "°F";
             break;
         case "Scientific":
             unit = "s";
+            // unitSymbol = "°K";
             break;
         case "Metric":
             default:
                 unit = "m";
+                // unitSymbol = "°C";
                 break;
     }
-
 
     // if(unitSelect.value === "Fahrenheit") unit = "f";
     // if(unitSelect.value === "Scientific") unit = "s";
     
-    const url = `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${city}&units=${unit}`;
+    const url = `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${city}&units=${unitSelect.value}`;
 
     try {
         const res = await fetch(url, options);
@@ -103,14 +133,56 @@ async function unitMode() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        console.log(`Weather data: ${data}`);
+        console.log("Updated Weather data: ",data);
         unitSelect.classList.toggle("show");
 
+        let unitSymbol = unitSelect.value === "Fahrenheit" ? "°F" : unitSelect.value === "Scientific" ? "°K" : "°C";
+
+
+        // let unitValue = "°C";
+        // switch (unit) {
+        //     case "f":
+        //         unitValue = "°F";
+        //         break;
+
+        //     case "s":
+        //         unitValue = "°K"
+        //         break;
+
+        //     case "m": 
+        //     default:
+        //         unitValue = "°C";
+        //         break;
+        // }
+        // if (unit === "m") {
+        //     unitValue = "°C";
+        // } else if (unit === "f") {
+        //     unitValue = "°F"
+        // } else {
+        //     unitValue = "°K"
+        // }
+
+        const { temperature, weather_descriptions, humidity, wind_speed, weather_icons, feelslike, precip } = data.current;
+
+        // Update Weather Info
+        let weatherInfo = document.getElementById("weatherInfo");
+        weatherInfo.innerHTML = `
+        <h2>${data.location.name}, ${data.location.country}</h2>
+        <h3>Local Time: ${data.location.localtime}</h3>
+        <img src="${weather_icons[0]}" alt="Weather Icon">
+
+        <table>
+            <tr><td><b>Temperature: </b></td><td>${temperature}${unitSymbol}</td></tr>
+            <tr><td><b>Feels Like: </b></td><td>${feelslike}${unitSymbol}</td></tr>
+            <tr><td><b>Weather_Description: </b></td><td>${weather_descriptions[0]}</td></tr>
+            <tr><td><b>Precipitation: </b></td><td>${precip}%</td></tr>
+            <tr><td><b>Humidity: </b></td><td>${humidity}%</td></tr>
+            <tr><td><b>Wind_Speed: </b></td><td>${wind_speed} km/h</td></tr>
+        </table>`
+        
     } catch (error) {
         console.error(error);
     }
-
-
 }
 
 

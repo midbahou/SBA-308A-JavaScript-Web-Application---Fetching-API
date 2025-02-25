@@ -66,8 +66,10 @@ button{
     border: 1px solid #ccc;
     background: white;
     cursor: pointer;
+    z-index: 1000;
 }
 
 #unitSelect option {
     padding: 5px;
+    z-index: 1000;
 }
