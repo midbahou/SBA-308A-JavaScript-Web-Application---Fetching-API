@@ -58,9 +58,9 @@ button{
 
 #unitSelect{
     display: block;
-    position: absolute;
-    top: 50px;
-    left: 10px;
+    position: fixed;
+    top: 10px;
+    left: 120px;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
